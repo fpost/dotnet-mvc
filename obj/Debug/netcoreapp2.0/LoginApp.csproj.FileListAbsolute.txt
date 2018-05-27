@@ -1,0 +1,11 @@
+/home/filip/dotnetMVC/LoginApp/bin/Debug/netcoreapp2.0/LoginApp.deps.json
+/home/filip/dotnetMVC/LoginApp/bin/Debug/netcoreapp2.0/LoginApp.runtimeconfig.json
+/home/filip/dotnetMVC/LoginApp/bin/Debug/netcoreapp2.0/LoginApp.runtimeconfig.dev.json
+/home/filip/dotnetMVC/LoginApp/bin/Debug/netcoreapp2.0/LoginApp.dll
+/home/filip/dotnetMVC/LoginApp/bin/Debug/netcoreapp2.0/LoginApp.pdb
+/home/filip/dotnetMVC/LoginApp/obj/Debug/netcoreapp2.0/LoginApp.csprojAssemblyReference.cache
+/home/filip/dotnetMVC/LoginApp/obj/Debug/netcoreapp2.0/LoginApp.csproj.CoreCompileInputs.cache
+/home/filip/dotnetMVC/LoginApp/obj/Debug/netcoreapp2.0/LoginApp.AssemblyInfoInputs.cache
+/home/filip/dotnetMVC/LoginApp/obj/Debug/netcoreapp2.0/LoginApp.AssemblyInfo.cs
+/home/filip/dotnetMVC/LoginApp/obj/Debug/netcoreapp2.0/LoginApp.dll
+/home/filip/dotnetMVC/LoginApp/obj/Debug/netcoreapp2.0/LoginApp.pdb
