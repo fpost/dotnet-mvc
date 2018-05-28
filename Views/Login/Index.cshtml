@@ -1,0 +1,22 @@
+@model LoginApp.Models.LoginForm;
+
+@{
+    ViewData["Title"] = "Logowanie";
+}
+
+<h2>Logowanie</h2>
+
+@using(Html.BeginForm("Index", "Login", FormMethod.Post))
+{
+    Login:<br /> 
+    @Html.TextBoxFor(m => m.login)
+    <br />
+    Hasło:<br />
+    @Html.TextBoxFor(m => m.password)
+    <br />
+    <input type="submit" value="ok" />
+}
+
+<h3>@ViewData["login"]
+</h3>
+<h2>@ViewData["password"]</h2>

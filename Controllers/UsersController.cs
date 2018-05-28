@@ -63,12 +63,22 @@ namespace LoginApp.Controllers
             }
             return View(user);
         }
-
-
-        public IActionResult Login()
+        
+        // GET: Users/Edit/5
+        [HttpPost]
+        public async Task<string> Login(string login)
         {
+            if (login == null)
+            {
+                return "not set";
+            }
 
-            return View();
+            var user = await _context.User.SingleOrDefaultAsync(m => m.Name == login);
+            if (user == null)
+            {
+                return "not found";
+            }
+            return "found";
         }
 
         // GET: Users/Edit/5
