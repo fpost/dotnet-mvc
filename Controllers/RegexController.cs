@@ -53,7 +53,7 @@ namespace LoginApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Value")] Regex regex)
+        public async Task<IActionResult> Create([Bind("ID,Name,Description,Value")] Regex regex)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace LoginApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Value")] Regex regex)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Description,Value")] Regex regex)
         {
             if (id != regex.ID)
             {

@@ -10,9 +10,10 @@ using System;
 namespace LoginApp.Migrations
 {
     [DbContext(typeof(LoginAppDbContext))]
-    partial class LoginAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180531100003_NameDescription")]
+    partial class NameDescription
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
