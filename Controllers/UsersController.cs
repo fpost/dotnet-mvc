@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LoginApp.Models;
+//To avoid conflict
+using sys_RegEx = System.Text.RegularExpressions;
 
 namespace LoginApp.Controllers
 {
@@ -186,13 +188,28 @@ namespace LoginApp.Controllers
                 if(data.Password == data.PasswordCheck)
                 {
                     //Sprawdzenie regexa
-                    user.Password = data.Password;
-                    
+                    if(sys_RegEx.Regex.IsMatch(data.Password, data.Regex))
+                    {
+                        query_data = await _context.Regex.ToListAsync();
+                        ViewData["errorMsg"] = "Password matchess regex: " + data.Regex +". User added.";
+                        ViewData["regexList"] = query_data;
+                        user.Password = data.Password;
+                        _context.User.Add(user);
+                        await _context.SaveChangesAsync();
+                        return View(data);
+                    }
+                    else
+                    {
+                        query_data = await _context.Regex.ToListAsync();
+                        ViewData["errorMsg"] = "Password doesn't match regex: " + data.Regex;
+                        ViewData["regexList"] = query_data;
+                        return View(data);
+                    }   
                 }
                 else
                 {
                     query_data = await _context.Regex.ToListAsync();
-                    ViewData["errorMmsg"] = "Passwords do not match";
+                    ViewData["errorMsg"] = "Passwords do not match";
                     ViewData["regexList"] = query_data;
                     return View(data);
                 }
