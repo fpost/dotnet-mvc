@@ -8,16 +8,31 @@ using Microsoft.EntityFrameworkCore;
 using LoginApp.Models;
 //To avoid conflict
 using sys_RegEx = System.Text.RegularExpressions;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace LoginApp.Controllers
 {
     public class UsersController : Controller
     {
         private readonly LoginAppDbContext _context;
-
         public UsersController(LoginAppDbContext context)
         {
             _context = context;
+        }
+
+        private string HashString(string toHash)
+        {
+            HashAlgorithm algo = SHA1.Create();
+            byte[] hashed_bytes = algo.ComputeHash(Encoding.UTF8.GetBytes(toHash));
+
+            StringBuilder builder = new StringBuilder();
+            foreach(byte i in hashed_bytes)
+            {
+                builder.Append(i.ToString("X2"));
+            }
+
+            return builder.ToString();
         }
 
         // GET: Users
@@ -193,7 +208,7 @@ namespace LoginApp.Controllers
                         query_data = await _context.Regex.ToListAsync();
                         ViewData["errorMsg"] = "Password matchess regex: " + data.Regex +". User added.";
                         ViewData["regexList"] = query_data;
-                        user.Password = data.Password;
+                        user.Password = HashString(data.Password);
                         _context.User.Add(user);
                         await _context.SaveChangesAsync();
                         return View(data);

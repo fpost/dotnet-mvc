@@ -18,9 +18,6 @@ namespace LoginApp.Controllers
             string login = data.login;
             string password = data.password;
 
-            ViewData["login"] = login;
-            ViewData["password"] = password;
-
             return View();
         }
     }
