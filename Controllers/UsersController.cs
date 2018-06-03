@@ -81,21 +81,29 @@ namespace LoginApp.Controllers
             return View(user);
         }
         
-        // GET: Users/Edit/5
+        // GET: Users/Login
         [HttpPost]
-        public async Task<string> Login(string login)
+        public async Task<IActionResult> Login(LoginForm data)
         {
-            if (login == null)
+            if(data == null)
             {
-                return "not set";
+                return RedirectToAction("Index","Login");
             }
 
-            var user = await _context.User.SingleOrDefaultAsync(m => m.Name == login);
+            var user = await _context.User.SingleOrDefaultAsync(m => m.Name == data.login);
             if (user == null)
             {
-                return "not found";
+                return RedirectToAction("Not_Found","User");
             }
-            return "found";
+            
+            if(user.Password == HashString(data.password))
+            {
+                return RedirectToAction("Success", "Login");
+            }
+            else
+            {
+                return RedirectToAction("Failed", "Login");
+            }
         }
 
         // GET: Users/Edit/5
@@ -130,6 +138,7 @@ namespace LoginApp.Controllers
             {
                 try
                 {
+                    user.Password = HashString(user.Password);
                     _context.Update(user);
                     await _context.SaveChangesAsync();
                 }
