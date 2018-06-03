@@ -1,0 +1,53 @@
+@model LoginApp.Models.RegisterForm
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>User</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Register">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PasswordCheck" class="control-label"></label>
+                <input asp-for="PasswordCheck" class="form-control" />
+                <span asp-validation-for="PasswordCheck" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Regex" class="control-label"></label>
+                <select asp-for="Regex" class="form-control">
+                    @foreach (Regex i in ViewData["regexList"] as List<Regex>)
+                    {
+                        <option value="@i.Value">@i.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+<h1>@ViewData["error"]</h1>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

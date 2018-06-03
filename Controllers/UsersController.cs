@@ -165,5 +165,42 @@ namespace LoginApp.Controllers
         {
             return _context.User.Any(e => e.ID == id);
         }
+
+        
+        public async Task<IActionResult> Register()
+        {
+            var query_data = await _context.Regex.ToListAsync();
+            ViewData["regexList"] = query_data;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterForm data)
+        {
+            List<Regex> query_data;
+
+            if(ModelState.IsValid)
+            {
+                User user = new User();
+                user.Name = data.Name;
+                if(data.Password == data.PasswordCheck)
+                {
+                    //Sprawdzenie regexa
+                    user.Password = data.Password;
+                    
+                }
+                else
+                {
+                    query_data = await _context.Regex.ToListAsync();
+                    ViewData["errorMmsg"] = "Passwords do not match";
+                    ViewData["regexList"] = query_data;
+                    return View(data);
+                }
+            }
+            
+            query_data = await _context.Regex.ToListAsync();           
+            ViewData["regexList"] = query_data;
+            return View(data); 
+        }
     }
 }

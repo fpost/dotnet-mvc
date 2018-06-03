@@ -1,6 +1,6 @@
 using System;
 
-namespace LoginApp.Models 
+namespace LoginApp.Models
 {
     public class LoginForm
     {

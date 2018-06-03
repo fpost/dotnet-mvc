@@ -6,12 +6,53 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LoginApp.Models;
+using System.Text;
 
 namespace LoginApp.Controllers
 {
     public class RegexController : Controller
     {
         private readonly LoginAppDbContext _context;
+
+        public string Builder(RegexForm data)
+        {
+            try
+            {
+                string length, uppercase, lowercase, specsigs, digits;
+                int min, max;
+                if (data.checkMinLength == true)
+                    min = data.minLength;
+                else
+                    min = 0;
+                if (data.checkMaxLength == true)
+                    max = data.maxLength;
+                else
+                    max = Int32.MaxValue;
+                length = "(?=^.{" + min + "," + max + "}$)";
+                if (data.checkUppercase == true)
+                    uppercase = "(?=(.*[A-Z]){" + data.minUppercase + ",})";
+                else
+                    uppercase = null;
+                if (data.checkLowercase == true)
+                    lowercase = "(?=(.*[a-z]){" + data.minLowercase + ",})";
+                else
+                    lowercase = null;
+                if (data.checkDigits == true)
+                    digits = @"(?=(.*\d){" + data.minDigits + ",})";
+                else
+                    digits = null;
+                if (data.checkSpecialSigns == true)
+                    specsigs = @"(?=(.*[^\da-zA-Z]){" + data.minSpecialSigns + ",})";
+                else
+                    specsigs = null;
+                string result = length + uppercase + lowercase + digits + specsigs;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
 
         public RegexController(LoginAppDbContext context)
         {
@@ -53,15 +94,22 @@ namespace LoginApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Description,Value")] Regex regex)
+        public async Task<IActionResult> Create(RegexForm data)
         {
-            if (ModelState.IsValid)
+            if(data != null)
             {
+                Regex regex = new Regex();
+                regex.Name = data.Name;
+                regex.Description = data.Description;
+                regex.Value = this.Builder(data);
                 _context.Add(regex);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(regex);
+            else
+            {
+                return View(data);
+            }
         }
 
         // GET: Regex/Edit/5
