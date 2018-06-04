@@ -24,7 +24,7 @@ namespace LoginApp.Controllers
                     min = data.minLength;
                 else
                     min = 0;
-                if (data.checkMaxLength == true)
+                if (data.checkMaxLength == true && data.minLength <= data.maxLength) //Quick fix for exception parsing regex if minlength greater than maxlength
                     max = data.maxLength;
                 else
                     max = Int32.MaxValue;
