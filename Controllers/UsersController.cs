@@ -68,18 +68,6 @@ namespace LoginApp.Controllers
         // POST: Users/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Password")] User user)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(user);
-        }
         
         // GET: Users/Login
         [HttpPost]
@@ -93,7 +81,7 @@ namespace LoginApp.Controllers
             var user = await _context.User.SingleOrDefaultAsync(m => m.Name == data.login);
             if (user == null)
             {
-                return RedirectToAction("Not_Found","User");
+                return RedirectToAction("WrongUsername","Users");
             }
             
             if(user.Password == HashString(data.password))
@@ -142,9 +130,9 @@ namespace LoginApp.Controllers
                     _context.Update(user);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch(DbUpdateConcurrencyException)
                 {
-                    if (!UserExists(user.ID))
+                    if (!UserExists(user.Name))
                     {
                         return NotFound();
                     }
@@ -187,9 +175,9 @@ namespace LoginApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserExists(int id)
+        private bool UserExists(string name)
         {
-            return _context.User.Any(e => e.ID == id);
+            return _context.User.Any(e => e.Name == name);
         }
 
         
@@ -209,7 +197,7 @@ namespace LoginApp.Controllers
             {
                 User user = new User();
                 user.Name = data.Name;
-                if(data.Password == data.PasswordCheck)
+                if(data.Password == data.PasswordCheck && !this.UserExists(data.Name))
                 {
                     //Sprawdzenie regexa
                     if(sys_RegEx.Regex.IsMatch(data.Password, data.Regex))
@@ -243,5 +231,11 @@ namespace LoginApp.Controllers
             ViewData["regexList"] = query_data;
             return View(data); 
         }
+
+        public IActionResult WrongUsername()
+        {
+            return View();
+        }
     }
+
 }

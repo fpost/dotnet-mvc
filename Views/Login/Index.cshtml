@@ -8,11 +8,15 @@
 
 @using(Html.BeginForm("Login", "Users", FormMethod.Post))
 {
-    Login:<br /> 
-    @Html.TextBoxFor(m => m.login)
-    <br />
-    Hasło:<br />
-    @Html.TextBoxFor(m => m.password)
-    <br />
-    <input type="submit" value="ok" />
+    <div class="form-group">
+        <label class="control-label">Login</label><br /> 
+        @Html.TextBoxFor(m => m.login)
+    </div>
+    <div class="form-group">
+        <label class="control-label">Hasło</label><br />
+        @Html.TextBoxFor(m => m.password)
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Log in!" class="btn btn-default" />
+    </div>
 }
