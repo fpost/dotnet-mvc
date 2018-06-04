@@ -1,36 +1,43 @@
 @model LoginApp.Models.RegexForm
 
 @{
-    ViewData["Title"] = "Logowanie";
+    ViewData["Title"] = "Regex";
 }
-
+<h1>
+    @ViewData["Title"]
+</h1>
+<h3>
+    Create
+</h3>
 @using(Html.BeginForm("Create", "Regex", FormMethod.Post))
 {
-    Nazwa:<br /> 
+    <label class="control-label">Nazwa:</label><br /> 
     @Html.TextBoxFor(m => m.Name)
     <br />
-    Opis:<br />
+    <label class="control-label">Opis:</label><br />
     @Html.TextBoxFor(m => m.Description)
     <br />
     <table>
         <tr>
-            <td>@Html.CheckBoxFor(m => m.checkMinLength)</td><td>@Html.TextBoxFor(m => m.minLength, new { @type = "number" })</td>
+            <td><label class="control-label">Min. dł.</label></td><td>@Html.CheckBoxFor(m => m.checkMinLength)</td><td>@Html.TextBoxFor(m => m.minLength, new { @type = "number" })</td>
         </tr>
         <tr>
-            <td>@Html.CheckBoxFor(m => m.checkMaxLength)</td><td>@Html.TextBoxFor(m => m.maxLength, new { @type = "number" })</td>
+            <td><label class="control-label">Max. dł.</label></td><td>@Html.CheckBoxFor(m => m.checkMaxLength)</td><td>@Html.TextBoxFor(m => m.maxLength, new { @type = "number" })</td>
         </tr>
         <tr>
-            <td>@Html.CheckBoxFor(m => m.checkUppercase)</td><td>@Html.TextBoxFor(m => m.minUppercase, new { @type = "number" })</td>
+            <td><label class="control-label">Min. ilość dużych zn.</label></td><td>@Html.CheckBoxFor(m => m.checkUppercase)</td><td>@Html.TextBoxFor(m => m.minUppercase, new { @type = "number" })</td>
         </tr>
         <tr>
-            <td>@Html.CheckBoxFor(m => m.checkLowercase)</td><td>@Html.TextBoxFor(m => m.minLowercase, new { @type = "number" })</td>
+            <td><label class="control-label">Min. ilość małych zn.</label></td><td>@Html.CheckBoxFor(m => m.checkLowercase)</td><td>@Html.TextBoxFor(m => m.minLowercase, new { @type = "number" })</td>
         </tr>
         <tr>
-            <td>@Html.CheckBoxFor(m => m.checkSpecialSigns)</td><td>@Html.TextBoxFor(m => m.minSpecialSigns, new { @type = "number" })</td>
+            <td><label class="control-label">Min. ilość zn. spec.</label></td><td>@Html.CheckBoxFor(m => m.checkSpecialSigns)</td><td>@Html.TextBoxFor(m => m.minSpecialSigns, new { @type = "number" })</td>
         </tr>
         <tr>
-            <td>@Html.CheckBoxFor(m => m.checkDigits)</td><td>@Html.TextBoxFor(m => m.minDigits, new { @type = "number" })</td>
+            <td><label class="control-label">Min. ilość cyfr</label></td><td>@Html.CheckBoxFor(m => m.checkDigits)</td><td>@Html.TextBoxFor(m => m.minDigits, new { @type = "number" })</td>
         </tr>
     </table>
-    <input type="submit" value="ok" />
+    <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+    </div>
 }
